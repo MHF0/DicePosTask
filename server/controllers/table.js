@@ -1,48 +1,27 @@
 const Table = require("../database/models/Table");
-const Product = require("../database/models/Product");
 
 const createTable = async (req, res) => {
+  const { product, quantity, price } = req.body;
+  const userId = req.token.id;
+
   try {
-    const user = req.token.id;
-    const { table } = req.body;
-    let product = [];
+    const item = await Table.findOne({ product });
 
-    //   cehck if this is the user that is adding to cart
-    const tableExistByThisUser = await Table.findOne({ user });
-
-    if (tableExistByThisUser) {
-      tableExistByThisUser.remove();
+    if (item) {
+      item.quantity += quantity;
+      await item.save();
+      return res.json({
+        success: true,
+        msg: "Product changed quantity successfully",
+        item,
+      });
     }
-
-    for (let i = 0; i < table.length; i++) {
-      let object = {};
-
-      const _id = table[i]._id;
-      object.product = table[i]._id;
-      object.count = table[i].count;
-
-      let productFromDB = await Product.findById(_id).exec();
-
-      object.price = productFromDB.price;
-
-      product.push(object);
-    }
-
-    const tableTotal = product.reduce((acc, curr) => {
-      return acc + curr.price * curr.count;
-    }, 0);
-
-    let newTable = new Table({
-      products: product,
-      tableTotal,
-      orderBy: orderBy,
-    });
-
-    await newTable.save();
-    return res.status(200).json({
+    const newItem = new Table({ product, quantity, price, user: userId });
+    await newItem.save();
+    return res.json({
       success: true,
-      message: "Added to Table",
-      data,
+      msg: "Product saved successfully",
+      newItem,
     });
   } catch (error) {
     return res.status(500).json({
@@ -56,15 +35,17 @@ const getTable = async (req, res) => {
   try {
     const userId = req.token.id;
 
-    const tables = await Table.findOne({ _id: userId }).populate({
-      path: "products",
-      populate: { path: "product" },
-    });
+    const tables = await Table.find({ user: userId }).populate("product");
+
+    const total = tables.reduce((acc, item) => {
+      return acc + item.quantity * item.price;
+    }, 0);
 
     return res.status(200).json({
       success: true,
       msg: "Table fetch success",
       tables: tables,
+      total,
     });
   } catch (error) {
     return res.status(500).json({
