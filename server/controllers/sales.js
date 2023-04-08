@@ -1,7 +1,9 @@
 const Sales = require("../database/models/sales");
+const Table = require("../database/models/Table");
 
 const creatSales = async (req, res) => {
   try {
+    const userId = req.token.id;
     const { table, total } = req.body;
 
     const newSales = Sales({
@@ -9,6 +11,8 @@ const creatSales = async (req, res) => {
       total,
     });
     await newSales.save();
+
+    await Table.deleteMany({ user: userId });
 
     return res.status(201).json({
       success: true,

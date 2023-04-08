@@ -4,7 +4,47 @@ body {
   direction: rtl;
 }
 
+.container {
+  width: 100%;
+  display: flex;
+}
+
 .flex {
   flex-direction: row;
   display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+.row::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.productButtons {
+  width: 25%;
+}
+
+.productTable {
+  width: 75%;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    display: flex;
+    width: 100%;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .productButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

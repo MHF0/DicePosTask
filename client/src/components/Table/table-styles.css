@@ -1,0 +1,102 @@
+.table-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 66vw;
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #007ad9;
+  border: 1px solid white;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+td:last-child {
+  text-align: center;
+  width: 50px;
+}
+
+.table-style {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.table-style:hover {
+  background-color: #d32f2f;
+}
+
+.close-head {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-container {
+  border-radius: 50%;
+  border: 1px solid;
+  width: 20px;
+  height: 20px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+}
+
+.total {
+  text-align: center;
+  background-color: #ffffff;
+  color: #d32f2f;
+}
+
+.total-container > td {
+  color: #d32f2f;
+}
+
+.order {
+  background-color: #007ad9;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.order:hover {
+  background-color: #025594;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.total {
+  font-size: 20px;
+  font-weight: bold;
+}

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { setProduct } from "../redux/product";
 import { useDispatch, useSelector } from "react-redux";
-import { productFunction } from "../APIs";
+import { productFunction, addToTable, getTableData } from "../APIs";
 import "./product.css";
+import { setTable } from "../redux/Table";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -17,17 +18,33 @@ const Product = () => {
     });
   };
 
+  const handleAddToTable = (product) => {
+    addToTable(product._id, product.price, 1).then((result) => {
+      if (result.success) {
+        getTableData().then((res) => {
+          if (res.success) {
+            dispatch(setTable(res));
+          }
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     getAllProduct();
   }, []);
 
   return (
-    <div className="flex">
+    <div className="productButtons">
       {productsArray?.map((item) => (
-        <div className="item-container" key={item._id}>
+        <button
+          className="item-container"
+          key={item._id}
+          onClick={() => handleAddToTable(item)}
+        >
           <p className="product-name">{item.name}</p>
           <p className="product-price">{item.price}</p>
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -55,4 +55,22 @@ const getTable = async (req, res) => {
   }
 };
 
-module.exports = { createTable, getTable };
+const deleteFromTable = async (req, res) => {
+  try {
+    const _id = req.query.tableId;
+
+    await Table.findByIdAndDelete(_id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Table delete success",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      msg: error.message,
+    });
+  }
+};
+
+module.exports = { createTable, getTable, deleteFromTable };

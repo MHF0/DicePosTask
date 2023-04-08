@@ -5,8 +5,7 @@ const { Schema } = mongoose;
 const Sales = new Schema(
   {
     table: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Table",
+      type: [],
       required: true,
     },
     total: {
